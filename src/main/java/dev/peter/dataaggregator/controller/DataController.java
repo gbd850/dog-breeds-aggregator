@@ -18,7 +18,7 @@ public class DataController {
     @Autowired
     private DataService dataService;
     @GetMapping
-    public List<DataResponse> retriveData(/*@RequestParam("filters") List<String> filters*/) {
+    public String retriveData(/*@RequestParam("filters") List<String> filters*/) {
         return dataService.fetchData();
     }
 }

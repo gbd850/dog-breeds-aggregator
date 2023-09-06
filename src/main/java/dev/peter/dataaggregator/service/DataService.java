@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class DataService {
-    public List<DataResponse> fetchData(/*List<String> filters*/) {
+    public String fetchData(/*List<String> filters*/) {
         //TODO fetch data from api
 //        HttpRequest request = HttpRequest.newBuilder()
 //                .uri(URI.create("https://dog-breeds2.p.rapidapi.com/dog_breeds"))
@@ -25,12 +25,12 @@ public class DataService {
         headers.add("X-RapidAPI-Host", "dog-breeds2.p.rapidapi.com");
         headers.setContentType(MediaType.APPLICATION_XML);
         HttpEntity<String> request = new HttpEntity<String>(headers);
-        ResponseEntity<List> response = restTemplate.exchange(
-                "https://dog-breeds2.p.rapidapi.com/dog_breeds", HttpMethod.GET, request, List.class);
+        ResponseEntity<String> response = restTemplate.exchange(
+                "https://dog-breeds2.p.rapidapi.com/dog_breeds", HttpMethod.GET, request, String.class);
 
-        List<DataResponse> data = response.getBody();
+//        List<DataResponse> data = response.getBody();
 
-        return data;
+        return response.getBody();
 
     }
 }
