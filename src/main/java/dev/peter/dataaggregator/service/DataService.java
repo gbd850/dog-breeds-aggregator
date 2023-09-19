@@ -10,6 +10,8 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,9 +29,26 @@ public class DataService {
 
         List<DataResponse> data = Arrays.asList(response.getBody());
 
+        String selectedBreed = filters.get(0);
+        String selectedOrigin = filters.get(1);
+
+        Predicate<DataResponse> breedFilter = (e) -> true;
+        Predicate<DataResponse> originFilter = (e) -> true;
+
+        if (!selectedBreed.equals("All")) {
+            breedFilter = (e) -> e.getBreed().equals(selectedBreed);
+        }
+        if (!selectedOrigin.equals("All")) {
+            originFilter = (e) -> e.getOrigin().equals(selectedOrigin);
+        }
+
+        //debug filter list check
         log.info(filters.toString());
 
-        return data;
+        return data.stream()
+                .filter(breedFilter)
+                .filter(originFilter)
+                .collect(Collectors.toList());
 
     }
 }
